@@ -1,5 +1,8 @@
 import { useEffect } from "react";
+
 import { useRouter } from "next/router";
+
+import Layout from "../../components/layout";
 
 const DEFAULT_GOLINK = "https://ronggy.com/";
 const GOLINKS = {
@@ -8,11 +11,16 @@ const GOLINKS = {
 
 const Golink = () => {
   const router = useRouter();
+  const { golink } = router.query;
   useEffect(() => {
-    const { golink } = router.query;
+    dataLayer.push({ golink: golink });
     window.location.replace(GOLINKS[golink] || DEFAULT_GOLINK);
   });
-  return <div>Redirecting...</div>;
+  return (
+    <Layout title={"RNGY → " + golink}>
+      <p>Redirecting...</p>
+    </Layout>
+  );
 };
 
 export default Golink;
