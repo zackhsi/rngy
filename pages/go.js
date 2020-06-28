@@ -20,7 +20,7 @@ const Golink = () => {
                 </Link>
               </td>
               <td>
-                <a href="{GOLINKS[key]}">{GOLINKS[key]}</a>
+                <a href={GOLINKS[key]}>{GOLINKS[key]}</a>
               </td>
             </tr>
           );
