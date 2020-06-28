@@ -3,11 +3,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 import Layout from "../../components/layout";
+import GOLINKS from "../../constants/golinks";
 
 const DEFAULT_GOLINK = "https://ronggy.com/";
-const GOLINKS = {
-  milkweed: "https://ronggy.com/originals/milkweed",
-};
 
 const Golink = () => {
   const router = useRouter();
