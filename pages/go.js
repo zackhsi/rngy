@@ -4,7 +4,6 @@ import GOLINKS from "../constants/golinks";
 import Layout from "../components/layout";
 
 const Golink = () => {
-  console.log(GOLINKS);
   return (
     <Layout title="Golinks">
       <table>

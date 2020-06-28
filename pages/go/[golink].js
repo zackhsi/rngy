@@ -11,7 +11,6 @@ const Golink = () => {
   const router = useRouter();
   const { golink } = router.query;
   useEffect(() => {
-    dataLayer.push({ golink: golink });
     window.location.replace(GOLINKS[golink] || DEFAULT_GOLINK);
   });
   return (
