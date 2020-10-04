@@ -68,6 +68,7 @@ async function create_qrcode(
   const ctx = canvas.getContext("2d");
 
   // Draw QR code.
+  ctx.imageSmoothingEnabled = false;
   const qrCodeImage = await QRCode.toCanvas(createCanvas(1, 1), qrCodeText, {
     errorCorrectionLevel: "H", // LMQH, "H" is highest.
     margin: 1,
@@ -79,6 +80,7 @@ async function create_qrcode(
   ctx.drawImage(qrCodeImage, 0, 0, qrCodeWidth, qrCodeWidth);
 
   // Draw circle.
+  ctx.imageSmoothingEnabled = true;
   ctx.beginPath();
   const paddingFactor = 2; // Fancy restaurants use big plates for small food.
   ctx.arc(
@@ -94,6 +96,7 @@ async function create_qrcode(
   ctx.fill();
 
   // Draw image.
+  ctx.imageSmoothingEnabled = true;
   ctx.drawImage(
     await loadImage(centerImageSrc),
     (qrCodeWidth - centerImageWidth) / 2,
