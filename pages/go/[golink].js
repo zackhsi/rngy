@@ -1,17 +1,26 @@
-import { GTM_AUTH, GTM_ID, GTM_PREVIEW } from "../../constants/gtm";
-
 import GOLINKS from "../../constants/golinks";
 import Head from "next/head";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const DEFAULT_GOLINK = "https://ronggy.com/";
+const GA_TRACKING_ID = "UA-74307110-6";
 
 const Golink = () => {
   const router = useRouter();
   const { golink } = router.query;
   useEffect(() => {
-    window.location.replace(GOLINKS[golink] || DEFAULT_GOLINK);
+    // Do not redirect until the page is fully hydrated.
+    // https://github.com/vercel/next.js/discussions/11484
+    if (!golink) {
+      return;
+    }
+    gtag("event", "page_view", {
+      page_path: window.location.pathname,
+      page_title: golink,
+      event_callback: function () {
+        window.location.replace(GOLINKS[golink] || "https://ronggy.com/");
+      },
+    });
   });
   return (
     <div>
@@ -19,22 +28,24 @@ const Golink = () => {
         <title>{"RNGY → " + golink}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        {/* Global Site Tag (gtag.js) - Google Analytics */}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+        />
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth=${GTM_AUTH}&gtm_preview=${GTM_PREVIEW}&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','${GTM_ID}');`,
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_TRACKING_ID}', {
+              send_page_view: false,
+            });
+          `,
           }}
         />
       </Head>
-      <noscript
-        dangerouslySetInnerHTML={{
-          __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}&gtm_auth=${GTM_AUTH}&gtm_preview=${GTM_PREVIEW}&gtm_cookies_win=x"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe`,
-        }}
-      />
       <p>Redirecting...</p>
     </div>
   );
