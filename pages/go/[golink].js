@@ -15,10 +15,15 @@ const Golink = () => {
       return;
     }
     gtag("event", "page_view", {
+      // window.location.href includes the querystring.
+      page_location: window.location.href,
       page_path: window.location.pathname,
       page_title: golink,
       event_callback: function () {
-        window.location.replace(GOLINKS[golink] || "https://ronggy.com/");
+        // Append window.location.search to preserve querystring through redirect.
+        window.location.replace(
+          (GOLINKS[golink] || "https://ronggy.com") + window.location.search
+        );
       },
     });
   });

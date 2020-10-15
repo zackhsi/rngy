@@ -13,7 +13,8 @@ const Golink = () => {
     for (const [shortLink, _longLink] of Object.entries(GOLINKS)) {
       if (!(shortLink in qrCodes)) {
         create_qrcode(
-          `https://rngy.dev/go/${shortLink}`,
+          // Append source=qr for better analytics.
+          `https://rngy.dev/go/${shortLink}?source=qr`,
           "./ronggy.png",
           800,
           150
