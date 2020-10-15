@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import GOLINKS from "../constants/golinks";
 import Layout from "../components/layout";
 import Link from "next/link";
+import styles from "../components/Layout.module.css";
 
 const QRCode = require("qrcode");
 const { createCanvas, loadImage } = require("canvas");
@@ -16,8 +17,8 @@ const Golink = () => {
           // Append source=qr for better analytics.
           `https://rngy.dev/go/${shortLink}?source=qr`,
           "./ronggy.png",
-          800,
-          150
+          3200,
+          600
         ).then((url) => {
           setQrCodes((qrCodes) => ({ ...qrCodes, [shortLink]: url }));
         });
@@ -26,7 +27,13 @@ const Golink = () => {
   }, []);
   return (
     <Layout title="Golinks">
-      <table>
+      <h1>Go Links</h1>
+      <p>
+        The QR code, when scanned, takes you to the the short link page. Each of
+        the short link pages redirects to the corresponding long link page.
+      </p>
+      <table className={styles["full-bleed"]}>
+        <caption>Links & QR Codes</caption>
         <thead>
           <tr>
             <th>Short Link</th>
@@ -48,6 +55,12 @@ const Golink = () => {
                 </td>
                 <td>
                   <img src={qrCodes[shortLink]} />
+                  <style jsx>{`
+                    img {
+                      width: 100%;
+                      max-width: 600px;
+                    }
+                  `}</style>
                 </td>
               </tr>
             );
