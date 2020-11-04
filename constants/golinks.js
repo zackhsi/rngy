@@ -1,4 +1,5 @@
 const GOLINKS = {
+  "creamier-x-ronggy": "https://ronggy.com/creamier-x-ronggy",
   "the-common-jay": "https://ronggy.com/creamier-x-ronggy/the-common-jay",
   "the-common-rose": "https://ronggy.com/creamier-x-ronggy/the-common-rose",
   "the-common-tiger": "https://ronggy.com/creamier-x-ronggy/the-common-tiger",
